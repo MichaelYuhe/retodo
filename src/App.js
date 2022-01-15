@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Todo from "./views/Todo/Todo";
+import Msg from "./views/Msg/Msg";
+import Record from './views/Record/Record'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="home-page">
+        <div className="container">
+          <Todo></Todo>
+        </div>
+        <div className="container">
+          <Msg></Msg>
+        </div>
+        <div className="container">
+          <Record></Record>
+        </div>
+      </div>
+    </>
   );
 }
-
 export default App;
