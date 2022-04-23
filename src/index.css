@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-  width: 25%;
+  width: 50%;
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
