@@ -5,7 +5,7 @@ const App = () => {
     <>
       <div className="home-page">
         <div className="container">
-          <Todo></Todo>
+          <Todo />
         </div>
       </div>
     </>

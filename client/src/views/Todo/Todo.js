@@ -1,34 +1,37 @@
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+
 import Header from "../../components/basic/Header";
 import Tasks from "../../components/todo/Tasks";
 import AddTask from "../../components/todo/AddTask";
+
 import './index.css'
-import { useState } from 'react'
 
 const Todo = () => {
   const [showAdd, setShowAdd] = useState(false)
-  const [tasks, setTasks] = useState(
-    [
-      {
-        id: 1,
-        text: 'Learn React',
-        day: '2021 | 11 | 13'
-      },
-      {
-        id: 2,
-        text: 'Review data structure',
-        day: '2021 | 11 | 14'
-      },
-    ]
-  )
+  const [tasks, setTasks] = useState([])
 
-  const addTask = (task) => {
-    const id = Math.floor(Math.random() * 10000) + 1
-    const newTask = { id, ...task }
-    setTasks([...tasks, newTask])
+  useEffect(() => {
+    axios
+      .get('http://localhost:8090/get')
+      .then(res => setTasks(res.data.items))
+  }, [])
+
+  const addTask = async (task) => {
+    try {
+      const _id = Math.floor(Math.random() * 10000) + 1
+      const newTask = { _id, text: task.text, date: task.day }
+      
+      await axios.post('http://localhost:8090/add', newTask)
+
+      setTasks([...tasks, newTask])
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+  const deleteTask = async (_id) => {
+    setTasks(tasks.filter((task) => task._id !== _id))
   }
 
   const toggleTask = (id) => {
