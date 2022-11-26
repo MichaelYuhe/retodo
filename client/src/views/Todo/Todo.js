@@ -13,7 +13,7 @@ const Todo = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:8090/get')
+      .get('https://retodo-server.zeabur.app:8090/get')
       .then(res => setTasks(res.data.items))
   }, [])
 
@@ -22,7 +22,7 @@ const Todo = () => {
       const _id = Math.floor(Math.random() * 10000) + 1
       const newTask = { _id, text: task.text, date: task.day }
       
-      await axios.post('http://localhost:8090/add', newTask)
+      await axios.post('https://retodo-server.zeabur.app:8090/add', newTask)
 
       setTasks([...tasks, newTask])
     } catch (error) {
