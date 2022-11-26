@@ -13,7 +13,7 @@ const Todo = () => {
 
   useEffect(() => {
     axios
-      .get('https://retodo-server.zeabur.app:8090/get')
+      .get('https://retodo-server.zeabur.app/get')
       .then(res => setTasks(res.data.items))
   }, [])
 
