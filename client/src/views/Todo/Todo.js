@@ -13,7 +13,7 @@ const Todo = () => {
 
   useEffect(() => {
     axios
-      .get('https://retodo-server.zeabur.app/get')
+      .get('https://retodo-server.zeabur.app/api/get')
       .then(res => setTasks(res.data.items))
   }, [])
 
@@ -21,8 +21,8 @@ const Todo = () => {
     try {
       const _id = Math.floor(Math.random() * 10000) + 1
       const newTask = { _id, text: task.text, date: task.day }
-      
-      await axios.post('https://retodo-server.zeabur.app:8090/add', newTask)
+
+      await axios.post('https://retodo-server.zeabur.app/api/add', newTask)
 
       setTasks([...tasks, newTask])
     } catch (error) {
@@ -31,12 +31,15 @@ const Todo = () => {
   }
 
   const deleteTask = async (_id) => {
-    setTasks(tasks.filter((task) => task._id !== _id))
-  }
+    try {
+      await axios.delete('https://retodo-server.zeabur.app/api/delete', {
+        data: { _id }
+      })
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map((task) => task.id === id ?
-      { ...task, reminder: !task.reminder } : task))
+      setTasks(tasks.filter((task) => task._id !== _id))
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -48,7 +51,7 @@ const Todo = () => {
       />
       {showAdd && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ?
-        (<Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleTask} />) :
+        (<Tasks tasks={tasks} onDelete={deleteTask} />) :
         ('No Tasks')}
     </>
 
